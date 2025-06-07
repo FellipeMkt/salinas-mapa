@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa Interativo de Salinas</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #f0f0f0;
+    }
+    #map-container {
+      width: 100vw;
+      height: 100vh;
+    }
+    object {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map-container">
+    <object id="svgMap" type="image/svg+xml" data="mapa.svg"></object>
+  </div>
+
+  <!-- Panzoom: Zoom e Arraste -->
+  <script src="https://unpkg.com/@panzoom/panzoom/dist/panzoom.min.js"></script>
+  <script>
+    const obj = document.getElementById('svgMap');
+    obj.addEventListener('load', () => {
+      const svgDoc = obj.contentDocument;
+      const svg = svgDoc.querySelector('svg');
+
+      const panzoom = Panzoom(svg, {
+        maxScale: 5,
+        minScale: 1,
+        contain: 'outside',
+        startScale: 1
+      });
+
+      svg.addEventListener('wheel', panzoom.zoomWithWheel);
+    });
+  </script>
+</body>
+</html>
